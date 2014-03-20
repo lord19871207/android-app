@@ -410,33 +410,36 @@ public class MainActivity extends BaseSlidingFragmentActivity implements
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
 
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            switch (keyBackClickCount++) {
-                case 0:
-                    Toast.makeText(this,
-                            getResources().getString(R.string.press_again_exit),
-                            Toast.LENGTH_SHORT).show();
-                    Timer timer = new Timer();
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            keyBackClickCount = 0;
-                        }
-                    }, 3000);
-                    break;
-                case 1:
-                    mFrameTv.setVisibility(View.VISIBLE);
-                    mImgTv.setVisibility(View.VISIBLE);
-                    Animation anim = AnimationUtils.loadAnimation(
-                            MainActivity.this, R.anim.tv_off);
-                    anim.setAnimationListener(new tvOffAnimListener());
-                    mImgTv.startAnimation(anim);
-                    break;
-                default:
-                    break;
-            }
+        	if (keyCode == KeyEvent.KEYCODE_BACK) {
+        			doubleClickExit();
+//            switch (keyBackClickCount++) {
+//                case 0:
+//                    Toast.makeText(this,
+//                            getResources().getString(R.string.press_again_exit),
+//                            Toast.LENGTH_SHORT).show();
+//                    Timer timer = new Timer();
+//                    timer.schedule(new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            keyBackClickCount = 0;
+//                        }
+//                    }, 3000);
+//                    break;
+//                case 1:
+//                    mFrameTv.setVisibility(View.VISIBLE);
+//                    mImgTv.setVisibility(View.VISIBLE);
+//                    Animation anim = AnimationUtils.loadAnimation(
+//                            MainActivity.this, R.anim.tv_off);
+//                    anim.setAnimationListener(new tvOffAnimListener());
+//                    mImgTv.startAnimation(anim);
+//                    break;
+//                default:
+//                    break;
+//            }
             return true;
-        } else if (keyCode == KeyEvent.KEYCODE_MENU) {
+        
+    			} else if (keyCode == KeyEvent.KEYCODE_MENU) {
+    	
 
             if (sm.isMenuShowing()) {
                 toggle();

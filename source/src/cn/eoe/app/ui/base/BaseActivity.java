@@ -55,6 +55,7 @@ public class BaseActivity extends Activity {
 		LogUtil.d(TAG, this.getClass().getSimpleName()
 				+ " onResume() invoked!!");
 		super.onResume();
+		//友盟统计
 		MobclickAgent.onResume(this);
 	}
 
@@ -63,6 +64,7 @@ public class BaseActivity extends Activity {
 		LogUtil.d(TAG, this.getClass().getSimpleName() + " onPause() invoked!!");
 		super.onPause();
 		try {
+			//友盟统计
 			MobclickAgent.onPause(this);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,6 +93,11 @@ public class BaseActivity extends Activity {
 		}
 	}
 
+	/**
+	 * 分享
+	 * @param url  
+	 * @param shareTitle  分享选择框上显示的字
+	 */
 	public void recommandToYourFriend(String url, String shareTitle) {
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
@@ -241,6 +248,8 @@ public class BaseActivity extends Activity {
 
 	private int network_err_count = 0;
 
+	protected long mExitTime;
+
 	protected void handleNetworkError() {
 		network_err_count++;
 		runOnUiThread(new Runnable() {
@@ -292,6 +301,21 @@ public class BaseActivity extends Activity {
 	public void defaultFinish()
 	{
 		super.finish();
+	}
+	
+	/**
+	 * 按返回键后根据时间 来判断双击退出。
+	 * 相比开一个timerTask 要更加简洁和节省资源
+	 */
+	public void doubleClickExit(){
+		if ((System.currentTimeMillis() - mExitTime) > 3000) {
+			mExitTime = System.currentTimeMillis();
+			Toast.makeText(this,
+                    getResources().getString(R.string.press_again_exit),
+                    Toast.LENGTH_SHORT).show();
+		}else{
+			defaultFinish();
+		}
 	}
 
 }
